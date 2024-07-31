@@ -8,8 +8,6 @@ import authRoutes from "./routes/authRoute.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js"
 import ProductRoutes from "./routes/ProductRoutes.js"
 import cors from "cors"
-import path from 'path'
-import { fileURLToPath } from "url";
 
 //Configure env to call
 dotEnv.config()
@@ -18,16 +16,12 @@ dotEnv.config()
 connectDB()
 
 //ES Modules fix
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express()
 
 // middlewares
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
-app.use(express.static(path.join(__dirname, "./client/build")))
 
 // rest object create
 
@@ -42,14 +36,6 @@ app.use("/api/v1/category", CategoryRoutes)
 
 app.use("/api/v1/product", ProductRoutes)
 
-//rest api
-// app.get('/', (req, res) => {
-//     res.send("<h1>Welcome to Ecommer App</h1>")
-// })
-
-app.use('*', function (req, res) {
-    res.sendFile(path.join(__dirname, './client/build/index.html'));
-})
 
 //PORT
 const PORT = process.env.PORT || 8080;  // Here Every Details will contain in dotEnv file 
